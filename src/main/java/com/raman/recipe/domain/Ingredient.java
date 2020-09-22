@@ -21,6 +21,15 @@ public class Ingredient {
     @ManyToOne
     private Recipe recipe;
 
+    /**
+     * 1. One ingredient can have one type of unit measurement so @OneToOne
+     * 2. cascade is not specified because Ingredient entity is not owner, it is just referring to units (cm,tbsp,etc) created
+     * 3. We don't want to delete unitOfMeasure when we delete any ingredient, so no cascade
+     * 4. fetch type is EAGER default for @OneToOne, but we specified it just to show how to set it
+     */
+    @OneToOne(fetch = FetchType.EAGER)
+    private UnitOfMeasure unitOfMeasure;
+
     public Long getId() {
         return id;
     }
