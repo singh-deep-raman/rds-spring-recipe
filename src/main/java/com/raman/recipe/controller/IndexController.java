@@ -8,6 +8,7 @@ public class IndexController {
 
     @RequestMapping({"","/","/index","/index.html"})
     public String indexPage() {
+        System.out.println("Some message to show instant restart asdf");
         return "index";
     }
 }
