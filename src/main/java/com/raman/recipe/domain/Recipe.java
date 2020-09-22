@@ -1,6 +1,7 @@
 package com.raman.recipe.domain;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Recipe {
@@ -26,6 +27,14 @@ public class Recipe {
 
     @OneToOne(cascade = CascadeType.ALL) // it makes Recipe owner of Notes
     private Notes notes;
+
+    /**
+     * 1. One recipe can have multiple ingredients so Set<Ingredients> and @OneToMany relationship
+     * 2. In this case, Recipe is owner of ingredient, so cascade is specified
+     * 3. mappedBy specifies column of Child class with which it will be mapped, basically FK
+     */
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
+    private Set<Ingredient> ingredients;
 
     public Long getId() {
         return id;
