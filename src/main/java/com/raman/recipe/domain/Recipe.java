@@ -45,6 +45,20 @@ public class Recipe {
     @Enumerated(value = EnumType.STRING)
     private Difficulty difficulty;
 
+    /**
+     * 1. Initially what we did, we specified @ManyToMany annotation in both Recipe and Categories POJOs
+     * 2. Result of it was hibernate created 2 tables for mapping, one with recipe_categories name and other with category_recipes name but columns were same
+     * 3. So we need to specify @JoinTable (you specify table name too) to tell hibernate that create join table for it, where we specify joinColumns and inverseJoinColumns
+     * 4. The joinColumns attribute is responsible for the columns mapping of the owning side.
+     * 5. The inverseJoinColumns attribute is responsible for the columns mapping of the inverse side.
+     */
+    @ManyToMany
+    @JoinTable(name = "recipe_category",
+            joinColumns = @JoinColumn(name = "recipe_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
+    private Set<Category> categories;
+
     public Long getId() {
         return id;
     }
@@ -139,5 +153,13 @@ public class Recipe {
 
     public void setDifficulty(Difficulty difficulty) {
         this.difficulty = difficulty;
+    }
+
+    public Set<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
     }
 }
