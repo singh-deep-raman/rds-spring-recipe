@@ -17,7 +17,6 @@ public class Recipe {
     private String source;
     private String url;
     private String directions;
-//    private Difficulty difficulty; todo add
 
     /**
      * It will be created as BLOB in JPA because it is of type Byte
@@ -35,6 +34,16 @@ public class Recipe {
      */
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
     private Set<Ingredient> ingredients;
+
+    /**
+     * 1. @Enumerated annotation is used when you try to save some enum value in DB
+     * 2. You can specify EnumType.STRING or EnumType.ORDINAL, default one is ORDINAL
+     * 3. STRING will save string content of enum, while ORDINAL will save 0,1,2.. etc
+     * 4. It is best you use STRING, because if you use ORDINAL and in future you change order or introduce new values in between
+     *    your saved data will be inconsistent
+     */
+    @Enumerated(value = EnumType.STRING)
+    private Difficulty difficulty;
 
     public Long getId() {
         return id;
@@ -114,5 +123,21 @@ public class Recipe {
 
     public void setNotes(Notes notes) {
         this.notes = notes;
+    }
+
+    public Set<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(Set<Ingredient> ingredients) {
+        this.ingredients = ingredients;
+    }
+
+    public Difficulty getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(Difficulty difficulty) {
+        this.difficulty = difficulty;
     }
 }
