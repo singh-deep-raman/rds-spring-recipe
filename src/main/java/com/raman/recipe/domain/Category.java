@@ -1,6 +1,7 @@
 package com.raman.recipe.domain;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -16,7 +17,10 @@ public class Category {
      * 2. Specify 'mappedBy = categories' where 'categories' is the field name in Recipe entity, tells hibernate that this relationship is managed by 'categories' field, so you don't need to touch it
      */
     @ManyToMany(mappedBy = "categories")
-    private Set<Recipe> recipes;
+    private Set<Recipe> recipes = new HashSet<>();
+
+    public Category() {
+    }
 
     public Long getId() {
         return id;
