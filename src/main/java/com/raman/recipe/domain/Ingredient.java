@@ -33,6 +33,15 @@ public class Ingredient {
     public Ingredient() {
     }
 
+    /**
+     * code refactor to use a constructor without ingredient property, addIngredient() method will be used to maintain 2 way relationships
+     */
+    public Ingredient(String description, BigDecimal amount, UnitOfMeasure unitOfMeasure) {
+        this.description = description;
+        this.amount = amount;
+        this.unitOfMeasure = unitOfMeasure;
+    }
+
     public Ingredient(String description, BigDecimal amount, UnitOfMeasure unitOfMeasure, Recipe recipe) {
         this.description = description;
         this.amount = amount;

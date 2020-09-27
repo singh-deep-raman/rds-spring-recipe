@@ -143,8 +143,21 @@ public class Recipe {
 
     public void setNotes(Notes notes) {
         this.notes = notes;
+        /**
+         * This is a 2 way relationship, so chances are you might forget to add recipe in notes object, so it is wise to do it here
+         */
+        notes.setRecipe(this);
     }
 
+    /**
+     * Recipe-Ingredient  is a 2 way relationship, so chances are you might forget to add recipe in ingredient object,
+     * so it is wise to do it here
+     */
+    public Recipe addIngredient(Ingredient ingredient) {
+        ingredient.setRecipe(this);
+        ingredients.add(ingredient);
+        return this;
+    }
     public Set<Ingredient> getIngredients() {
         return ingredients;
     }
