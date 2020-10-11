@@ -4,6 +4,7 @@ import com.raman.recipe.domain.*;
 import com.raman.recipe.repositories.CategoryRepository;
 import com.raman.recipe.repositories.RecipeRepository;
 import com.raman.recipe.repositories.UnitOfMeasureRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -17,6 +18,7 @@ import java.util.Optional;
  * 2. We need to annotate it with @Component so that it becomes Spring managed component
  * 3. We need to implement ApplicationListener interface and override it's onApplicationEvent() method, where we will write our bootstrap logic
  */
+@Slf4j
 @Component
 public class DataBootstrap implements ApplicationListener<ContextRefreshedEvent> {
 
@@ -32,17 +34,19 @@ public class DataBootstrap implements ApplicationListener<ContextRefreshedEvent>
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
-
+        log.debug("onApplication Event entered");
         /** saving 2 recipes */
         Recipe tacosRecipe = getTacosRecipe();
         recipeRepository.save(tacosRecipe);
 
         Recipe guacaRecipe = getGuacaRecipe();
         recipeRepository.save(guacaRecipe);
+        log.debug("onApplication Event exit");
     }
 
     /** copied object creation code from author's branch */
     private Recipe getGuacaRecipe() {
+        log.debug("Getting Guaca Recipe:");
         /** Getting categories from DB */
         final Optional<Category> americanCategoryOptional = categoryRepository.findByDescription("American");
         Category americanCategory = americanCategoryOptional.get();
@@ -100,11 +104,13 @@ public class DataBootstrap implements ApplicationListener<ContextRefreshedEvent>
         guacRecipe.getCategories().add(americanCategory);
         guacRecipe.getCategories().add(mexicanCategory);
 
+        log.debug("Guapa Recipe returning");
         return guacRecipe;
     }
 
     /** copied object creation code from author's branch */
     private Recipe getTacosRecipe() {
+        log.debug("Getting Tacos Recipe:");
         /** Getting categories from DB */
         final Optional<Category> americanCategoryOptional = categoryRepository.findByDescription("American");
         Category americanCategory = americanCategoryOptional.get();
@@ -175,6 +181,7 @@ public class DataBootstrap implements ApplicationListener<ContextRefreshedEvent>
         tacosRecipe.getCategories().add(americanCategory);
         tacosRecipe.getCategories().add(mexicanCategory);
 
+        log.debug("Returning Tacos Recipe...");
         return tacosRecipe;
     }
 
