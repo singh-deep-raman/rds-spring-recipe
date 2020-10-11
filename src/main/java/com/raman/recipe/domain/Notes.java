@@ -1,7 +1,13 @@
 package com.raman.recipe.domain;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 import javax.persistence.*;
 
+/** Lombok annotation @Data for getter, setter, toString, equals, hashcode, constructor */
+@Data
+@EqualsAndHashCode(exclude = "recipe") // if you don't specify exclude, it will become circular dependency and StackOverFlow error
 @Entity
 public class Notes {
 
@@ -26,27 +32,4 @@ public class Notes {
     public Notes() {
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Recipe getRecipe() {
-        return recipe;
-    }
-
-    public void setRecipe(Recipe recipe) {
-        this.recipe = recipe;
-    }
-
-    public String getRecipeNotes() {
-        return recipeNotes;
-    }
-
-    public void setRecipeNotes(String recipeNotes) {
-        this.recipeNotes = recipeNotes;
-    }
 }
